@@ -8,7 +8,7 @@
 #define SCREEN_HEIGHT 64 // OLED display height, in pixels
 
 // Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
-// The pins for I2C are defined by the Wire-library. 
+// The pins for I2C are defined by the Wire-library.
 // On an arduino UNO:       A4(SDA), A5(SCL)
 // On an arduino MEGA 2560: 20(SDA), 21(SCL)
 // On an arduino LEONARDO:   2(SDA),  3(SCL), ...
@@ -47,8 +47,9 @@ void drawKeyboard() {
         display.setTextColor(SSD1306_BLACK);
         display.write(KEYBOARD_LAYOUT[i]);
         display.setTextColor(SSD1306_WHITE);
+      } else {
+        display.write(KEYBOARD_LAYOUT[i]);
       }
-      display.write(KEYBOARD_LAYOUT[i]);
       x += 7;
     }
 
@@ -77,36 +78,6 @@ void setup() {
     Serial.println(F("SSD1306 allocation failed"));
     for(;;); // Don't proceed, loop forever
   }
-<<<<<<< HEAD
-
-  // Show initial display buffer contents on the screen --
-  // the library initializes this with an Adafruit splash screen.
-  display.display();
-  delay(2000); // Pause for 2 seconds
-
-  // Clear the buffer
-  display.clearDisplay();
-
-  display.setTextSize(1);      // Normal 1:1 pixel scale
-  display.setTextColor(SSD1306_WHITE); // Draw white text
-  display.setCursor(0, 0);     // Start at top-left corner
-  display.cp437(true);         // Use full 256 char 'Code Page 437' font
-
-  // Not all the characters will fit on the display. This is normal.
-  // Library will draw what it can and the rest will be clipped.
-  byte line = 0;
-  for(int16_t i=0; i<LAYOUT_LENGTH; i++) {
-    if(i == '/') {line ++; display.setCursor(0, line*10); }
-    else          display.write(KEYBOARD_LAYOUT[i]);
-  }
-
-
-  // Show the display buffer on the screen. You MUST call display() after
-  // drawing commands to make them visible on screen!
-  display.display();
-  delay(2000);
-
-
 }
 
 void loop() {
@@ -116,19 +87,10 @@ void loop() {
   Serial.print("Horizontal Potentiometer Value: ");
   Serial.println(horizontal_value);
 
-  // Serial.print("Vertical Potentiometer Value: ");
-  // Serial.println(vertical_value);
-
-  delay(1000); // Delay for a second before the next reading
-=======
-}
-
-void loop() {
-  selectedChar += 1;
+  selectedChar = 28 * ((float)horizontal_value / (float)4095);
   if (selectedChar > 28) selectedChar = 0;
   drawKeyboard();
-  delay(2000);
->>>>>>> 586c9d0a30c66dc720a8d8a3d25221acf33fe6c8
+  delay(200);
 }
 
 void testdrawrect(void) {
