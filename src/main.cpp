@@ -83,9 +83,6 @@ void setup() {
 }
 
 void loop() {
-  delay(200);
-  if (!bleKeyboard.isConnected()) return;
-  Serial.println("Writing to keyboard");
   int horizontal_value = analogRead(horizontal_pot);
   int vertical_value = analogRead(vertical_pot);
 
@@ -98,6 +95,9 @@ void loop() {
   selectedChar = 28 * ((float)horizontal_value / (float)4095);
   if (selectedChar > 28) selectedChar = 0;
   drawKeyboard();
-  bleKeyboard.print(KEYBOARD_LAYOUT[selectedChar]);
+
+  if (bleKeyboard.isConnected()) {
+    bleKeyboard.print(KEYBOARD_LAYOUT[selectedChar]);
+  }
   delay(200);
 }
