@@ -89,15 +89,17 @@ void loop() {
   Serial.print("Horizontal Potentiometer Value: ");
   Serial.println(horizontal_value);
 
-  // Serial.print("Horizontal Potentiometer Value: ");
-  // Serial.println(horizontal_value);
+  Serial.print("Horizontal Potentiometer Value: ");
+  Serial.println(horizontal_value);
 
   selectedChar = 28 * ((float)horizontal_value / (float)4095);
   if (selectedChar > 28) selectedChar = 0;
   drawKeyboard();
 
   if (bleKeyboard.isConnected()) {
-    bleKeyboard.print(KEYBOARD_LAYOUT[selectedChar]);
+    if (KEYBOARD_LAYOUT[selectedChar] != '\n') {
+      bleKeyboard.print(KEYBOARD_LAYOUT[selectedChar]);
+    }
   }
   delay(200);
 }
