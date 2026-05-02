@@ -22,6 +22,9 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 #define MARGIN 2
 
 byte selectedChar = 0;
+byte lastSelected = selectedChar;
+
+int lastRead = LOW;
 
 void drawKeyboard() {
   // Clear the buffer
@@ -91,15 +94,17 @@ void loop() {
   Serial.print("Horizontal Potentiometer Value: ");
   Serial.println(horizontal_value);
 
-  // Serial.print("Horizontal Potentiometer Value: ");
-  // Serial.println(horizontal_value);
-
+  lastSelected = selectedChar;
   selectedChar = 28 * ((float)horizontal_value / (float)4095);
-  if (selectedChar > 28) selectedChar = 0;
-  drawKeyboard();
+  if (selectedChar != lastSelected) {
+    if (selectedChar > 28) selectedChar = 0;
+    drawKeyboard(); // Redraw display
+  }
 
-  if (bleKeyboard.isConnected() && digitalRead(enter) == LOW) {
+  int aaaa = digitalRead(enter);
+  if (bleKeyboard.isConnected() && aaaa == LOW && lastRead != LOW) {
     bleKeyboard.print(KEYBOARD_LAYOUT[selectedChar]);
   }
-  delay(200);
+  lastRead = aaaa;
+  delay(20);
 }
