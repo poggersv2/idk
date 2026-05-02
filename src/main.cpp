@@ -110,5 +110,5 @@ void loop() {
     }
   }
   lastRead = aaaa;
-  delay(20);
+  delay(17);
 }
