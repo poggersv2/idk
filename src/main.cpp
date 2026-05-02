@@ -19,9 +19,16 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 #define LAYOUT_LENGTH 28
 #define KEYBOARD_LAYOUT "QWERTYUIOP/ASDFGHJKL/ZXCVBNM"
 
-void setup() {
-  Serial.begin(9600);
+const int horizontal_pot = 27;
+const int vertical_pot = 26;
+const int BAUD_RATE = 115200;
 
+void setup() {
+  Serial.begin(BAUD_RATE);
+
+  // initialize potentiometer
+  pinMode(horizontal_pot, INPUT);
+  pinMode(vertical_pot, INPUT);
   // Wait for display
   delay(500);
 
@@ -52,14 +59,26 @@ void setup() {
     else          display.write(KEYBOARD_LAYOUT[i]);
   }
 
+
   // Show the display buffer on the screen. You MUST call display() after
   // drawing commands to make them visible on screen!
   display.display();
   delay(2000);
+
+
 }
 
 void loop() {
+  int horizontal_value = analogRead(horizontal_pot);
+  int vertical_value = analogRead(vertical_pot);
 
+  Serial.print("Horizontal Potentiometer Value: ");
+  Serial.println(horizontal_value);
+
+  // Serial.print("Vertical Potentiometer Value: ");
+  // Serial.println(vertical_value);
+
+  delay(1000); // Delay for a second before the next reading
 }
 
 void testdrawrect(void) {
