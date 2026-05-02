@@ -61,8 +61,8 @@ void drawKeyboard() {
   display.display();
 }
 
-const int horizontal_pot = 10;
-const int vertical_pot = 11;
+const int horizontal_pot = 0;
+const int vertical_pot = 1;
 const int BAUD_RATE = 115200;
 
 void setup() {
@@ -89,8 +89,8 @@ void loop() {
   Serial.print("Horizontal Potentiometer Value: ");
   Serial.println(horizontal_value);
 
-  Serial.print("Horizontal Potentiometer Value: ");
-  Serial.println(horizontal_value);
+  // Serial.print("Horizontal Potentiometer Value: ");
+  // Serial.println(horizontal_value);
 
   selectedChar = 28 * ((float)horizontal_value / (float)4095);
   if (selectedChar > 28) selectedChar = 0;
