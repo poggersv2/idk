@@ -17,8 +17,8 @@ BleKeyboard bleKeyboard;
 #define SCREEN_ADDRESS 0x3C ///< See datasheet for Address; 0x3D for 128x64, 0x3C for 128x32
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
-#define LAYOUT_LENGTH 28
-#define KEYBOARD_LAYOUT "QWERTYUIOP\nASDFGHJKL\nZXCVBNM"
+#define LAYOUT_LENGTH 35
+#define KEYBOARD_LAYOUT "QWERTYUIOP\nASDFGHJKL\nZXCVBNM\nSPACE"
 #define MARGIN 2
 
 byte selectedChar = 0;
@@ -95,15 +95,19 @@ void loop() {
   Serial.println(horizontal_value);
 
   lastSelected = selectedChar;
-  selectedChar = 28 * ((float)horizontal_value / (float)4095);
+  selectedChar = LAYOUT_LENGTH * ((float)horizontal_value / (float)4095);
   if (selectedChar != lastSelected) {
-    if (selectedChar > 28) selectedChar = 0;
+    // if (selectedChar > LA) selectedChar = 0;
     drawKeyboard(); // Redraw display
   }
 
   int aaaa = digitalRead(enter);
   if (bleKeyboard.isConnected() && aaaa == LOW && lastRead != LOW) {
-    bleKeyboard.print(KEYBOARD_LAYOUT[selectedChar]);
+    if (selectedChar > 28) {
+      bleKeyboard.print(' ');
+    } else {
+      bleKeyboard.print((char)tolower(KEYBOARD_LAYOUT[selectedChar]));
+    }
   }
   lastRead = aaaa;
   delay(20);
