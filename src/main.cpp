@@ -60,16 +60,16 @@ void drawKeyboard() {
   display.display();
 }
 
-const int horizontal_pot = 27;
-const int vertical_pot = 26;
+// const int horizontal_pot = 27;
+// const int vertical_pot = 26;
 const int BAUD_RATE = 115200;
 
 void setup() {
   Serial.begin(BAUD_RATE);
 
   // initialize potentiometer
-  pinMode(horizontal_pot, INPUT);
-  pinMode(vertical_pot, INPUT);
+  // pinMode(horizontal_pot, INPUT);
+  // pinMode(vertical_pot, INPUT);
   // Wait for display
   delay(500);
 
@@ -81,13 +81,16 @@ void setup() {
 }
 
 void loop() {
-  int horizontal_value = analogRead(horizontal_pot);
-  int vertical_value = analogRead(vertical_pot);
+  // int horizontal_value = analogRead(horizontal_pot);
+  // int vertical_value = analogRead(vertical_pot);
 
-  Serial.print("Horizontal Potentiometer Value: ");
-  Serial.println(horizontal_value);
+  // // Serial.print("Horizontal Potentiometer Value: ");
+  // // Serial.println(horizontal_value);
 
-  selectedChar = 28 * ((float)horizontal_value / (float)4095);
+  // Serial.print("Vertical Potentiometer Value: ");
+  // Serial.println(vertical_value);
+
+  // selectedChar = 28 * ((float)horizontal_value / (float)4095);
   if (selectedChar > 28) selectedChar = 0;
   drawKeyboard();
   delay(200);
