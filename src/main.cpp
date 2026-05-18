@@ -64,14 +64,16 @@ void drawKeyboard() {
   display.display();
 }
 
-const int horizontal_pot = 0;
-const int vertical_pot = 1;
-const int enter = 10;
+const int horizontal_pot = 34;
+// const int vertical_pot = 1;
+const int enter = 16;
 const int BAUD_RATE = 115200;
 
 void setup() {
   Serial.begin(BAUD_RATE);
   bleKeyboard.begin();
+
+  Serial.println("go!!");
 
   // initialize potentiometer
   pinMode(horizontal_pot, INPUT);
@@ -89,7 +91,7 @@ void setup() {
 
 void loop() {
   int horizontal_value = analogRead(horizontal_pot);
-  int vertical_value = analogRead(vertical_pot);
+  // int vertical_value = analogRead(vertical_pot);
 
   Serial.print("Horizontal Potentiometer Value: ");
   Serial.println(horizontal_value);
